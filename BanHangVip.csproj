@@ -64,6 +64,8 @@
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.8" />
+		<PackageReference Include="UraniumUI" Version="2.14.0" />
+		<PackageReference Include="UraniumUI.Material" Version="2.14.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -91,6 +93,11 @@
 	  <MauiXaml Update="Views\PosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Views\" />
+	  <Folder Include="ViewModels\" />
 	</ItemGroup>
 
 </Project>
