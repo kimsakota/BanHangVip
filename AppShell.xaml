@@ -6,13 +6,9 @@
     xmlns:local="clr-namespace:BanHangVip"
     xmlns:localvm="clr-namespace:BanHangVip.ViewModels"
     xmlns:views="clr-namespace:BanHangVip.Views"
+    xmlns:icons="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
     Shell.FlyoutBehavior="Disabled"
     Title="SeaOrder">
-
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
 
     <Shell.Resources>
         <Style x:Key="BaseStyle" TargetType="Element">
@@ -29,28 +25,38 @@
 
     <!-- TabBar Bottom Navigation -->
     <TabBar>
-        <Tab Title="Sản phẩm" Icon="icon_home.png">
-            <!-- Cần thêm icon vào Resources/Images -->
+        <Tab Title="Sản phẩm">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Home}" Color="#0369a1"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
         </Tab>
 
-        <Tab Title="Chờ giao" Icon="icon_pending.png">
-            <!-- Placeholder cho View chờ giao -->
+        <Tab Title="Chờ giao">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Schedule}" Color="#0369a1"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:PendingOrdersView}" />
         </Tab>
 
-        <Tab Title="Nhập hàng" Icon="icon_intake.png">
-            <!-- Placeholder -->
+        <Tab Title="Nhập hàng">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Input}" Color="#0369a1"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
         </Tab>
 
-        <Tab Title="Lịch sử" Icon="icon_history.png">
-            <!-- Placeholder -->
+        <Tab Title="Lịch sử">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.History}" Color="#0369a1"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
         </Tab>
 
-        <Tab Title="Cài đặt" Icon="icon_settings.png">
-            <!-- Placeholder -->
+        <Tab Title="Cài đặt">
+            <Tab.Icon>
+                <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Settings}" Color="#0369a1"/>
+            </Tab.Icon>
             <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
         </Tab>
     </TabBar>

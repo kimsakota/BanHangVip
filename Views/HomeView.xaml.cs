@@ -1,9 +1,12 @@
+using BanHangVip.ViewModels;
+
 namespace BanHangVip.Views;
 
 public partial class HomeView : ContentPage
 {
-	public HomeView()
-	{
-		InitializeComponent();
-	}
+    public HomeView(HomeViewModel viewModel)
+    {
+        InitializeComponent();
+        BindingContext = viewModel;
+    }
 }
