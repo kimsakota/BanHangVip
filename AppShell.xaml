@@ -3,31 +3,9 @@
     x:Class="BanHangVip.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:views="clr-namespace:BanHangVip.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="SeaOrder">
 
-    <TabBar>
-        <!-- Trang 1: Bán Hàng (PosPage) -->
-        <Tab Title="Bán Hàng" Icon="icon_pos.png">
-            <!-- Hãy thêm icon phù hợp -->
-            <ShellContent ContentTemplate="{DataTemplate views:PosPage}" Route="PosPage" />
-        </Tab>
-
-        <!-- Trang 2: Đơn Chờ (Dashboard) -->
-        <Tab Title="Đơn Chờ" Icon="icon_order.png">
-            <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" Route="DashboardPage" />
-        </Tab>
-
-        <!-- Trang 3: Nhập Kho -->
-        <Tab Title="Nhập Hàng" Icon="icon_import.png">
-            <ShellContent ContentTemplate="{DataTemplate views:ImportPage}" Route="ImportPage" />
-        </Tab>
-
-        <!-- Trang 4: Lịch Sử -->
-        <Tab Title="Lịch Sử" Icon="icon_history.png">
-            <ShellContent ContentTemplate="{DataTemplate views:HistoryPage}" Route="HistoryPage" />
-        </Tab>
-    </TabBar>
+    
 
 </Shell>
