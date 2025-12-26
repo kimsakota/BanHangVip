@@ -43,21 +43,21 @@
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Input}" Color="#0369a1"/>
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:IntakeView}" />
         </Tab>
 
         <Tab Title="Lịch sử">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.History}" Color="#0369a1"/>
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:HistoryView}" />
         </Tab>
 
         <Tab Title="Cài đặt">
             <Tab.Icon>
                 <FontImageSource FontFamily="MaterialRegular" Glyph="{x:Static icons:MaterialRegular.Settings}" Color="#0369a1"/>
             </Tab.Icon>
-            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+            <ShellContent ContentTemplate="{DataTemplate views:SettingsView}" />
         </Tab>
     </TabBar>
 

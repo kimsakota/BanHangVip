@@ -12,6 +12,8 @@ namespace BanHangVip.Services
     {
         private ObservableCollection<Product> _products;
         private ObservableCollection<Order> _orders;
+        private ObservableCollection<HistoryItem> _history;
+
         public DataService()
         {
             _products = new ObservableCollection<Product>
@@ -25,6 +27,7 @@ namespace BanHangVip.Services
             };
 
             _orders = new ObservableCollection<Order>();
+            _history = new ObservableCollection<HistoryItem>();
         }
         public ObservableCollection<Product> GetProducts() => _products;
         public ObservableCollection<Order> GetOrders() => _orders;
@@ -32,32 +35,65 @@ namespace BanHangVip.Services
 
         public void UpdateProduct(Product product)
         {
-            throw new NotImplementedException();
+            var existing = _products.FirstOrDefault(p => p.Id == product.Id);
+            if (existing != null)
+            {
+                var index = _products.IndexOf(existing);
+                _products[index] = product;
+            }
         }
 
         public ObservableCollection<Order> GetPendingOrders()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Order>(_orders.Where(o => o.Status == OrderStatus.Pending));
         }
 
         public ObservableCollection<Order> GetDeliveredOrders()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Order>(_orders.Where(o => o.Status == OrderStatus.Delivered));
         }
 
         public void UpdateOrder(Order order)
         {
-            throw new NotImplementedException();
+            var existing = _orders.FirstOrDefault(o => o.Id == order.Id);
+            if (existing != null)
+            {
+                var index = _orders.IndexOf(existing);
+                _orders[index] = order;
+            }
         }
 
-        public ObservableCollection<HistoryItem> GetHistory()
-        {
-            throw new NotImplementedException();
-        }
+        public ObservableCollection<HistoryItem> GetHistory() => _history;
 
         public void AddHistoryItem(HistoryItem item)
         {
-            throw new NotImplementedException();
+            _history.Insert(0, item);
+        }
+
+        public void DeliverOrder(Order order)
+        {
+            var existingOrder = _orders.FirstOrDefault(o => o.Id == order.Id);
+            if (existingOrder != null)
+            {
+                existingOrder.Status = OrderStatus.Delivered;
+                // Cập nhật thời gian giao thực tế nếu cần
+                // existingOrder.DeliveredAt = DateTime.Now; 
+
+                // Tạo lịch sử xuất kho cho từng món trong đơn
+                foreach (var item in existingOrder.Items)
+                {
+                    var historyItem = new HistoryItem
+                    {
+                        Id = $"DEL-{DateTime.Now.Ticks}-{item.ProductId}",
+                        Type = "DELIVERY",
+                        ProductName = item.ProductName,
+                        Weight = item.Weight,
+                        Price = item.Price,
+                        Timestamp = DateTime.Now
+                    };
+                    _history.Insert(0, historyItem);
+                }
+            }
         }
     }
 }

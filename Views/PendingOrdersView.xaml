@@ -1,12 +1,110 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:models="clr-namespace:BanHangVip.Models"
              x:Class="BanHangVip.Views.PendingOrdersView"
-             Title="PendingOrdersView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+             Title="Đơn chờ giao"
+             BackgroundColor="#f8fafc">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="20,15" BackgroundColor="White">
+            <VerticalStackLayout>
+                <Label Text="Đơn chờ giao" 
+                       TextColor="#1e293b" 
+                       FontAttributes="Bold" 
+                       FontSize="24"/>
+                <Label Text="Quản lý và xác nhận đơn xuất kho" 
+                       TextColor="#64748b" 
+                       FontSize="14"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Order List -->
+        <CollectionView Grid.Row="1" 
+                        ItemsSource="{Binding PendingOrders}"
+                        Margin="15">
+
+            <!-- Giao diện khi không có dữ liệu (EmptyView) -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Label Text="🚚" FontSize="60" HorizontalOptions="Center" Opacity="0.5"/>
+                    <Label Text="Hiện không có đơn chờ" 
+                           TextColor="#94a3b8" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Order">
+                    <Border StrokeShape="RoundRectangle 20"
+                            StrokeThickness="1"
+                            Stroke="#e2e8f0"
+                            BackgroundColor="White"
+                            Padding="20">
+                        <Border.Shadow>
+                            <Shadow Brush="#cbd5e1" Offset="2,4" Radius="4" Opacity="0.2"/>
+                        </Border.Shadow>
+
+                        <VerticalStackLayout Spacing="10">
+                            <!-- Top Row: Status & Time -->
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Border BackgroundColor="#fef3c7" StrokeThickness="0" StrokeShape="RoundRectangle 8" HorizontalOptions="Start" Padding="8,4">
+                                    <Label Text="{Binding Status}" TextColor="#b45309" FontSize="10" FontAttributes="Bold" TextTransform="Uppercase"/>
+                                </Border>
+                                <Label Grid.Column="1" Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}" TextColor="#94a3b8" FontSize="12" FontAttributes="Bold"/>
+                            </Grid>
+
+                            <!-- Customer Info -->
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding CustomerName}" TextColor="#1e293b" FontAttributes="Bold" FontSize="18"/>
+                                <Label Text="{Binding Id}" TextColor="#cbd5e1" FontSize="10" FontAttributes="Bold" TextTransform="Uppercase" CharacterSpacing="2"/>
+                            </VerticalStackLayout>
+
+                            <!-- Mini Items Preview -->
+                            <Border BackgroundColor="#f8fafc" StrokeThickness="0" StrokeShape="RoundRectangle 10" Padding="15">
+                                <VerticalStackLayout Spacing="5" BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:OrderItem">
+                                            <Grid ColumnDefinitions="*, Auto">
+                                                <Label Text="{Binding ProductName}" TextColor="#334155" FontSize="13" FontAttributes="Bold"/>
+                                                <Label Grid.Column="1" Text="{Binding Weight, StringFormat='{0:F1} kg'}" TextColor="#0369a1" FontSize="13" FontAttributes="Bold"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Action Buttons -->
+                            <Grid ColumnDefinitions="*, 2*" ColumnSpacing="10" Margin="0,5,0,0">
+                                <Button Text="SỬA GIÁ" 
+                                        BackgroundColor="#f1f5f9" 
+                                        TextColor="#475569" 
+                                        FontAttributes="Bold"
+                                        CornerRadius="12"
+                                        HeightRequest="45"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PendingOrdersViewModel}}, Path=EditOrderCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                <Button Grid.Column="1" 
+                                        Text="XÁC NHẬN GIAO" 
+                                        BackgroundColor="#0d9488" 
+                                        TextColor="White" 
+                                        FontAttributes="Bold"
+                                        CornerRadius="12"
+                                        HeightRequest="45"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PendingOrdersViewModel}}, Path=ConfirmDeliveryCommand}"
+                                        CommandParameter="{Binding .}"/>
+                            </Grid>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

@@ -24,5 +24,7 @@ namespace BanHangVip.Services
         // Lịch sử
         ObservableCollection<HistoryItem> GetHistory();
         void AddHistoryItem(HistoryItem item);
+
+        void DeliverOrder(Order order);
     }
 }

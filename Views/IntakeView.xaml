@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:models="clr-namespace:BanHangVip.Models"
+             x:Class="BanHangVip.Views.IntakeView"
+             Title="Nhập hàng"
+             BackgroundColor="#f8fafc">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header & Input Area -->
+        <Border Grid.Row="0" StrokeThickness="0" BackgroundColor="White" Padding="20">
+            <Border.Shadow>
+                <Shadow Brush="#cbd5e1" Offset="0,4" Radius="10" Opacity="0.1"/>
+            </Border.Shadow>
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Nhập hàng vào kho" TextColor="#1e293b" FontAttributes="Bold" FontSize="20"/>
+
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
+                    <!-- Weight Input -->
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="SỐ KG NHẬP" TextColor="#94a3b8" FontSize="10" FontAttributes="Bold"/>
+                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10,5" HeightRequest="50">
+                            <Entry Text="{Binding InputWeight}" 
+                                   Placeholder="0.0" 
+                                   Keyboard="Numeric" 
+                                   TextColor="#0369a1" 
+                                   FontAttributes="Bold"
+                                   FontSize="18"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Price Input -->
+                    <VerticalStackLayout Grid.Column="1" Spacing="5">
+                        <Label Text="ĐƠN GIÁ (VNĐ)" TextColor="#94a3b8" FontSize="10" FontAttributes="Bold"/>
+                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10,5" HeightRequest="50">
+                            <Entry Text="{Binding InputPrice}" 
+                                   Placeholder="0" 
+                                   Keyboard="Numeric" 
+                                   TextColor="#059669" 
+                                   FontAttributes="Bold"
+                                   FontSize="18"/>
+                        </Border>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Selected Product Preview -->
+                <Border BackgroundColor="#f0f9ff" StrokeShape="RoundRectangle 12" StrokeThickness="0" Padding="15" IsVisible="{Binding IsProductSelected}">
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="{Binding SelectedProduct.Icon}" FontSize="24"/>
+                        <Label Text="{Binding SelectedProduct.Name}" TextColor="#0369a1" FontAttributes="Bold" VerticalOptions="Center"/>
+                        <Label Text="Đã chọn" TextColor="#94a3b8" FontSize="10" FontAttributes="Italic" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Button Text="LƯU PHIẾU NHẬP" 
+                        Command="{Binding SaveIntakeCommand}"
+                        BackgroundColor="#0369a1" 
+                        TextColor="White" 
+                        FontAttributes="Bold" 
+                        CornerRadius="12" 
+                        HeightRequest="50"
+                        IsEnabled="{Binding IsProductSelected}"/>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Product List Selection -->
+        <ScrollView Grid.Row="1" Padding="15">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="CHỌN HẢI SẢN" TextColor="#94a3b8" FontSize="12" FontAttributes="Bold" Margin="5,0"/>
+
+                <CollectionView ItemsSource="{Binding Products}" SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="3" VerticalItemSpacing="10" HorizontalItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Product">
+                            <Border StrokeShape="RoundRectangle 15" Stroke="#f1f5f9" BackgroundColor="White" Padding="10">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:IntakeViewModel}}, Path=SelectProductCommand}"
+                                                          CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState x:Name="Normal" />
+                                        <VisualState x:Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="#e0f2fe" />
+                                                <Setter Property="Stroke" Value="#0369a1" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                                    <Label Text="{Binding Icon}" FontSize="32" HorizontalOptions="Center"/>
+                                    <Label Text="{Binding Name}" TextColor="#334155" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" LineBreakMode="TailTruncation"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

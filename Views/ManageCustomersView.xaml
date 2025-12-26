@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             x:Class="BanHangVip.Views.ManageCustomersView"
+             Title="Quản lý Khách hàng"
+             BackgroundColor="#f8fafc">
+
+    <Grid RowDefinitions="Auto, *">
+        <Grid Grid.Row="0" Padding="15" BackgroundColor="White">
+            <Label Text="Danh sách khách hàng" TextColor="#1e293b" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"/>
+            <Button Text="+" 
+                    Command="{Binding AddCustomerCommand}"
+                    HorizontalOptions="End" 
+                    BackgroundColor="#0369a1" 
+                    TextColor="White" 
+                    WidthRequest="40" 
+                    HeightRequest="40" 
+                    CornerRadius="20"
+                    Padding="0"
+                    FontSize="24"/>
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Customers}" Margin="15">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="15" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="#cbd5e1" Offset="1,2" Radius="3" Opacity="0.1"/>
+                        </Border.Shadow>
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Border StrokeShape="RoundRectangle 20" BackgroundColor="#f0f9ff" WidthRequest="40" HeightRequest="40" StrokeThickness="0" Margin="0,0,15,0">
+                                <Label Text="👤" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1" Text="{Binding .}" TextColor="#334155" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

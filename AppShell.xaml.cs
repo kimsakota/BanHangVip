@@ -1,4 +1,6 @@
 ﻿
+using BanHangVip.Views;
+
 namespace BanHangVip;
 
 public partial class AppShell : Shell
@@ -7,6 +9,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        
+        Routing.RegisterRoute(nameof(ManageProductsView), typeof(ManageProductsView));
+        Routing.RegisterRoute(nameof(ManageCustomersView), typeof(ManageCustomersView));
     }
 }

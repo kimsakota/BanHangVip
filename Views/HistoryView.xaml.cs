@@ -2,11 +2,11 @@
 
 namespace BanHangVip.Views;
 
-public partial class PendingOrdersView : ContentPage
+public partial class HistoryView : ContentPage
 {
-    private readonly PendingOrdersViewModel _viewModel;
+    private readonly HistoryViewModel _viewModel;
 
-    public PendingOrdersView(PendingOrdersViewModel viewModel)
+    public HistoryView(HistoryViewModel viewModel)
     {
         InitializeComponent();
         _viewModel = viewModel;
@@ -16,7 +16,7 @@ public partial class PendingOrdersView : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        // Refresh danh sách mỗi khi vào lại màn hình này để đảm bảo dữ liệu mới nhất
+        // Refresh dữ liệu mỗi khi vào màn hình này
         _viewModel.Refresh();
     }
 }

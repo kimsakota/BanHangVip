@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             x:Class="BanHangVip.Views.SettingsView"
+             Title="Cài đặt"
+             BackgroundColor="#f8fafc">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="20">
+            <!-- Header -->
+            <VerticalStackLayout Spacing="5" Margin="0,10,0,10">
+                <Label Text="Cài đặt hệ thống" 
+                       TextColor="#1e293b" 
+                       FontAttributes="Bold" 
+                       FontSize="24"
+                       HorizontalOptions="Center"/>
+                <Label Text="Quản lý danh mục và báo cáo" 
+                       TextColor="#64748b" 
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+
+            <!-- Menu Items -->
+            <VerticalStackLayout Spacing="15">
+
+                <!-- Thanh toán -->
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="#0369a1" StrokeThickness="0" Padding="20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToPaymentsCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="#0ea5e9" Offset="0,4" Radius="10" Opacity="0.4"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#33ffffff" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                            <Label Text="💰" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Thanh toán" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Thu tiền các đơn đã giao" TextColor="#bae6fd" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="→" TextColor="#7dd3fc" FontSize="20" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Thống kê báo cáo -->
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Stroke="#f1f5f9" StrokeThickness="1" Padding="20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToStatisticsCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="#cbd5e1" Offset="0,2" Radius="5" Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#f0f9ff" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                            <Label Text="📊" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Thống kê báo cáo" TextColor="#1e293b" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="So sánh Nhập kho &amp; Đã bán" TextColor="#94a3b8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="→" TextColor="#cbd5e1" FontSize="20" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Quản lý hải sản -->
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Stroke="#f1f5f9" StrokeThickness="1" Padding="20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToManageProductsCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="#cbd5e1" Offset="0,2" Radius="5" Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#f0f9ff" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                            <Label Text="🦐" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Quản lý hải sản" TextColor="#1e293b" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Thêm, sửa, xóa danh mục" TextColor="#94a3b8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="→" TextColor="#cbd5e1" FontSize="20" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- Quản lý khách hàng -->
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Stroke="#f1f5f9" StrokeThickness="1" Padding="20">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToManageCustomersCommand}"/>
+                    </Border.GestureRecognizers>
+                    <Border.Shadow>
+                        <Shadow Brush="#cbd5e1" Offset="0,2" Radius="5" Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Border StrokeShape="RoundRectangle 12" BackgroundColor="#f0f9ff" WidthRequest="50" HeightRequest="50" StrokeThickness="0">
+                            <Label Text="👥" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                            <Label Text="Quản lý khách hàng" TextColor="#1e293b" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Danh sách khách hàng chọn nhanh" TextColor="#94a3b8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="→" TextColor="#cbd5e1" FontSize="20" FontAttributes="Bold" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
+            <!-- Lock Button -->
+            <Button Text="🔓 KHÓA ỨNG DỤNG NGAY" 
+                    Command="{Binding LockAppCommand}"
+                    BackgroundColor="#fff1f2" 
+                    TextColor="#e11d48" 
+                    FontAttributes="Bold" 
+                    CornerRadius="15" 
+                    HeightRequest="55"
+                    BorderColor="#ffe4e6"
+                    BorderWidth="1"
+                    Margin="0,20,0,0"/>
+
+            <!-- Footer Info -->
+            <VerticalStackLayout Spacing="5" Margin="0,20,0,20">
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="#f1f5f9" WidthRequest="50" HeightRequest="50" StrokeThickness="0" HorizontalOptions="Center">
+                    <Label Text="🚢" FontSize="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Border>
+                <Label Text="SEAORDER v1.0.0 (MAUI)" 
+                       TextColor="#cbd5e1" 
+                       FontSize="10" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       CharacterSpacing="2"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
