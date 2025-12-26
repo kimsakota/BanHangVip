@@ -3,9 +3,56 @@
     x:Class="BanHangVip.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:BanHangVip"
+    xmlns:localvm="clr-namespace:BanHangVip.ViewModels"
+    xmlns:views="clr-namespace:BanHangVip.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="SeaOrder">
 
-    
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />
+
+    <Shell.Resources>
+        <Style x:Key="BaseStyle" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="#ffffff" />
+            <Setter Property="Shell.ForegroundColor" Value="#0369a1" />
+            <Setter Property="Shell.TitleColor" Value="#0369a1" />
+            <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
+            <Setter Property="Shell.UnselectedColor" Value="#94a3b8" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="#ffffff" />
+            <Setter Property="Shell.TabBarTitleColor" Value="#0369a1" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="#94a3b8" />
+        </Style>
+    </Shell.Resources>
+
+    <!-- TabBar Bottom Navigation -->
+    <TabBar>
+        <Tab Title="Sản phẩm" Icon="icon_home.png">
+            <!-- Cần thêm icon vào Resources/Images -->
+            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+        </Tab>
+
+        <Tab Title="Chờ giao" Icon="icon_pending.png">
+            <!-- Placeholder cho View chờ giao -->
+            <ShellContent ContentTemplate="{DataTemplate views:PendingOrdersView}" />
+        </Tab>
+
+        <Tab Title="Nhập hàng" Icon="icon_intake.png">
+            <!-- Placeholder -->
+            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+        </Tab>
+
+        <Tab Title="Lịch sử" Icon="icon_history.png">
+            <!-- Placeholder -->
+            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+        </Tab>
+
+        <Tab Title="Cài đặt" Icon="icon_settings.png">
+            <!-- Placeholder -->
+            <ShellContent ContentTemplate="{DataTemplate views:HomeView}" />
+        </Tab>
+    </TabBar>
 
 </Shell>

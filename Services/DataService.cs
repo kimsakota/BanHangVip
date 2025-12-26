@@ -8,13 +8,6 @@ using System.Threading.Tasks;
 
 namespace BanHangVip.Services
 {
-    public interface IDataService
-    {
-        ObservableCollection<Product> GetProducts();
-        ObservableCollection<Order> GetOrders();
-        void AddOrder(Order order);
-    }
-
     public class DataService : IDataService
     {
         private ObservableCollection<Product> _products;
@@ -36,5 +29,35 @@ namespace BanHangVip.Services
         public ObservableCollection<Product> GetProducts() => _products;
         public ObservableCollection<Order> GetOrders() => _orders;
         public void AddOrder(Order order) => _orders.Insert(0, order);
+
+        public void UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ObservableCollection<Order> GetPendingOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ObservableCollection<Order> GetDeliveredOrders()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ObservableCollection<HistoryItem> GetHistory()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddHistoryItem(HistoryItem item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

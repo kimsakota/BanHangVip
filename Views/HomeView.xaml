@@ -1,10 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:material="http://schemas.enis-solutions.com/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:BanHangVip.ViewModels"
              xmlns:models="clr-namespace:BanHangVip.Models"
-             x:Class="BanHangVip.MainPage" 
+             x:Class="BanHangVip.Views.HomeView" 
              BackgroundColor="#f8fafc"
              Title="SeaOrder">
 
