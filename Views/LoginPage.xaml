@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             x:Class="BanHangVip.Views.LoginPage"
+             BackgroundColor="White">
+    <ContentPage.BindingContext>
+        <vm:LoginViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*,Auto,Auto,Auto,*" Padding="30" RowSpacing="20">
+        <Image Source="appicon.svg" HeightRequest="120" WidthRequest="120" VerticalOptions="End"/>
+
+        <Label Grid.Row="1" Text="Đăng Nhập SeaOrder" FontSize="28" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#0288D1"/>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="15">
+            <Border Stroke="#0288D1" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,5">
+                <Entry Placeholder="Tên đăng nhập" Text="{Binding Username}" FontSize="16"/>
+            </Border>
+            <Border Stroke="#0288D1" StrokeThickness="1" StrokeShape="RoundRectangle 10" Padding="15,5">
+                <Entry Placeholder="Mật khẩu" IsPassword="True" Text="{Binding Password}" FontSize="16"/>
+            </Border>
+        </VerticalStackLayout>
+
+        <Button Grid.Row="3" 
+                Text="ĐĂNG NHẬP" 
+                Command="{Binding LoginCommand}"
+                BackgroundColor="#0288D1" 
+                TextColor="White" 
+                FontAttributes="Bold"
+                HeightRequest="55"
+                CornerRadius="25"/>
+
+        <ActivityIndicator Grid.Row="3" IsRunning="{Binding IsBusy}" Color="White" HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>

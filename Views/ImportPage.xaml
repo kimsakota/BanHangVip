@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             x:Class="BanHangVip.Views.ImportPage"
+             Title="Nhập hàng"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto, *, Auto" Padding="15">
+        <VerticalStackLayout Spacing="10">
+            <Label Text="Thông tin phiếu nhập" FontAttributes="Bold"/>
+            <Editor Placeholder="Ghi chú nguồn hàng, độ tươi..." HeightRequest="80" BackgroundColor="White"/>
+        </VerticalStackLayout>
+
+        <Label Grid.Row="1" Text="Chọn mặt hàng để nhập (Demo)" VerticalOptions="Center" HorizontalOptions="Center" TextColor="#999"/>
+
+        <Button Grid.Row="2" Text="LƯU PHIẾU NHẬP" BackgroundColor="#2196F3" TextColor="White" FontAttributes="Bold" HeightRequest="50" CornerRadius="25" Command="{Binding SaveImportCommand}"/>
+    </Grid>
+</ContentPage>

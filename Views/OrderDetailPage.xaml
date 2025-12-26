@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:model="clr-namespace:BanHangVip.Models"
+             x:Class="BanHangVip.Views.OrderDetailPage"
+             Title="Chi tiết đơn hàng"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="15" Padding="20">
+                <!-- Info Card -->
+                <Border StrokeShape="RoundRectangle 10" BackgroundColor="White" Padding="15" StrokeThickness="0">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="{Binding Order.Id, StringFormat='Mã đơn: {0}'}" TextColor="#757575"/>
+                        <Label Text="{Binding Order.CustomerName}" FontSize="22" FontAttributes="Bold" TextColor="#333"/>
+                        <Label Text="{Binding Order.StatusText}" TextColor="{Binding Order.StatusColor}" FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Items List -->
+                <Label Text="Danh sách mặt hàng" FontAttributes="Bold" Margin="0,10,0,0"/>
+                <CollectionView ItemsSource="{Binding Order.Items}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:OrderItem">
+                            <Grid ColumnDefinitions="*, Auto" Padding="10" BackgroundColor="White" Margin="0,0,0,2">
+                                <Label Text="{Binding Item.Name}" VerticalOptions="Center" FontSize="16"/>
+                                <Label Grid.Column="1" Text="{Binding DisplayWeight}" FontAttributes="Bold" TextColor="#0288D1"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid ColumnDefinitions="*, Auto" Margin="0,10">
+                    <Label Text="Tổng khối lượng:" FontSize="18"/>
+                    <Label Grid.Column="1" Text="{Binding Order.TotalWeight, StringFormat='{0:F2} kg'}" FontSize="18" FontAttributes="Bold"/>
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Actions -->
+        <Grid Grid.Row="1" ColumnDefinitions="*, *" Padding="15" ColumnSpacing="10" BackgroundColor="White">
+            <Button Text="HỦY ĐƠN" BackgroundColor="#FFEBEE" TextColor="Red" Command="{Binding CancelOrderCommand}"/>
+            <Button Grid.Column="1" Text="XÁC NHẬN GIAO" BackgroundColor="#0288D1" TextColor="White" FontAttributes="Bold" Command="{Binding ConfirmDeliveryCommand}"/>
+        </Grid>
+    </Grid>
+</ContentPage>

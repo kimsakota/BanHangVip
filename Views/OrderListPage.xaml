@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:model="clr-namespace:BanHangVip.Models"
+             x:Class="BanHangVip.Views.OrderListPage"
+             Title="Đơn chờ giao"
+             BackgroundColor="#F5F5F5">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Search Bar -->
+        <Border Grid.Row="0" Margin="15" StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="10,0">
+            <SearchBar Placeholder="Tìm khách hàng / SĐT" BackgroundColor="Transparent"/>
+        </Border>
+
+        <!-- Order List -->
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Orders}" Margin="15,0">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Order">
+                    <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="15" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="Black" Offset="0,2" Radius="5" Opacity="0.1"/>
+                        </Border.Shadow>
+                        <Grid RowDefinitions="Auto, Auto, Auto" ColumnDefinitions="*, Auto" RowSpacing="10">
+                            <!-- Header -->
+                            <Label Text="{Binding Id, StringFormat='Đơn #{0}'}" FontSize="14" TextColor="#757575"/>
+                            <Label Grid.Column="1" Text="{Binding StatusText}" TextColor="{Binding StatusColor}" FontAttributes="Bold"/>
+
+                            <!-- Customer Info -->
+                            <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2">
+                                <Label Text="{Binding CustomerName}" FontSize="18" FontAttributes="Bold" TextColor="#333"/>
+                                <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm - dd/MM/yyyy}'}" FontSize="13" TextColor="#999"/>
+                            </VerticalStackLayout>
+
+                            <!-- Actions -->
+                            <Button Grid.Row="2" Grid.ColumnSpan="2"
+                                    Text="XÁC NHẬN ĐÃ GIAO" 
+                                    BackgroundColor="#E0F7FA" 
+                                    TextColor="#006064"
+                                    FontAttributes="Bold"
+                                    CornerRadius="10"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrderListViewModel}}, Path=QuickDeliverCommand}"
+                                    CommandParameter="{Binding .}"/>
+
+                            <!-- Tap to Details -->
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:OrderListViewModel}}, Path=GoToDetailCommand}" CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- FAB to Create -->
+        <Button Grid.Row="1" 
+                Text="+" 
+                FontSize="30"
+                Command="{Binding GoToCreateOrderCommand}"
+                BackgroundColor="#0288D1" 
+                TextColor="White"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="30"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="20"/>
+    </Grid>
+</ContentPage>

@@ -1,10 +1,16 @@
-﻿namespace BanHangVip
+﻿using BanHangVip.Views;
+
+namespace BanHangVip;
+
+public partial class AppShell : Shell
 {
-    public partial class AppShell : Shell
+    public AppShell()
     {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+
+        // Register Routes for navigation
+        Routing.RegisterRoute(nameof(CreateOrderPage), typeof(CreateOrderPage));
+        Routing.RegisterRoute(nameof(OrderDetailPage), typeof(OrderDetailPage));
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
     }
 }
