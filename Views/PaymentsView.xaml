@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:Class="BanHangVip.Views.PaymentsView"
+             Title="Công nợ"
+             BackgroundColor="#f8fafc"
+             Shell.NavBarIsVisible="False"
+             ios:Page.UseSafeArea="True">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="15,15" BackgroundColor="White" ColumnDefinitions="Auto, *">
+
+            <!-- Nút Back (Vector Icon) -->
+            <Border StrokeShape="RoundRectangle 20" 
+                    BackgroundColor="Transparent" 
+                    StrokeThickness="0" 
+                    HeightRequest="40" 
+                    WidthRequest="40" 
+                    Padding="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                </Border.GestureRecognizers>
+                <Path Data="M20,11H7.83l5.59-5.59L12,4l-8,8l8,8l1.41-1.41L7.83,13H20V11z" 
+                      Fill="#1e293b" 
+                      Aspect="Uniform"
+                      HeightRequest="24"
+                      WidthRequest="24"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center"/>
+            </Border>
+
+            <Label Grid.Column="1" 
+                   Text="Công nợ khách hàng" 
+                   TextColor="#1e293b" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   VerticalOptions="Center"
+                   Margin="10,0,0,0"/>
+        </Grid>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Debts}" Margin="15">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Label Text="✅" FontSize="60" HorizontalOptions="Center"/>
+                    <Label Text="Không còn công nợ" TextColor="#94a3b8" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:CustomerDebt">
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="20" StrokeThickness="0">
+                        <Border.Shadow>
+                            <Shadow Brush="#cbd5e1" Offset="2,4" Radius="5" Opacity="0.1"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout Spacing="15">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <VerticalStackLayout>
+                                    <Label Text="{Binding CustomerName}" TextColor="#1e293b" FontAttributes="Bold" FontSize="18"/>
+                                    <Label Text="{Binding OrderCount, StringFormat='{0} đơn chưa thanh toán'}" TextColor="#64748b" FontSize="12"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" HorizontalOptions="End">
+                                    <Label Text="Tổng nợ" TextColor="#94a3b8" FontSize="10" TextTransform="Uppercase" HorizontalOptions="End"/>
+                                    <Label Text="{Binding TotalAmount, StringFormat='{0:N0} đ'}" TextColor="#e11d48" FontAttributes="Bold" FontSize="18"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <Button Text="TẤT TOÁN CÔNG NỢ" 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PaymentsViewModel}}, Path=ProcessPaymentCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="#10b981" 
+                                    TextColor="White" 
+                                    FontAttributes="Bold" 
+                                    CornerRadius="12"
+                                    HeightRequest="50"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

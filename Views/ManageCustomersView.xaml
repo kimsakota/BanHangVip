@@ -2,16 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="BanHangVip.Views.ManageCustomersView"
              Title="Quản lý Khách hàng"
-             BackgroundColor="#f8fafc">
+             BackgroundColor="#f8fafc"
+             Shell.NavBarIsVisible="False"
+             ios:Page.UseSafeArea="True">
 
     <Grid RowDefinitions="Auto, *">
-        <Grid Grid.Row="0" Padding="15" BackgroundColor="White">
-            <Label Text="Danh sách khách hàng" TextColor="#1e293b" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"/>
-            <Button Text="+" 
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="15,15" BackgroundColor="White" ColumnDefinitions="Auto, *, Auto">
+
+            <!-- Nút Back dùng Vector Icon (Path) thay vì Text để tránh lỗi font -->
+            <Border StrokeShape="RoundRectangle 20" 
+                    BackgroundColor="Transparent" 
+                    StrokeThickness="0" 
+                    HeightRequest="40" 
+                    WidthRequest="40" 
+                    Padding="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                </Border.GestureRecognizers>
+                <!-- Hình mũi tên vẽ bằng Path -->
+                <Path Data="M20,11H7.83l5.59-5.59L12,4l-8,8l8,8l1.41-1.41L7.83,13H20V11z" 
+                      Fill="#1e293b" 
+                      Aspect="Uniform"
+                      HeightRequest="24"
+                      WidthRequest="24"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center"/>
+            </Border>
+
+            <Label Grid.Column="1" 
+                   Text="Khách hàng" 
+                   TextColor="#1e293b" 
+                   FontAttributes="Bold" 
+                   FontSize="20" 
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+
+            <!-- Nút Thêm -->
+            <Button Grid.Column="2"
+                    Text="+" 
                     Command="{Binding AddCustomerCommand}"
-                    HorizontalOptions="End" 
                     BackgroundColor="#0369a1" 
                     TextColor="White" 
                     WidthRequest="40" 
@@ -21,6 +54,7 @@
                     FontSize="24"/>
         </Grid>
 
+        <!-- Danh sách -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Customers}" Margin="15">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>

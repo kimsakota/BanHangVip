@@ -14,15 +14,15 @@ public partial class SettingsViewModel : BaseViewModel
     [RelayCommand]
     private async Task NavigateToPayments()
     {
-        // Điều hướng đến trang Thanh toán (sẽ tạo sau)
-        await Shell.Current.DisplayAlert("Thông báo", "Tính năng Thanh toán đang phát triển", "OK");
+        // Đã cập nhật: Điều hướng đến trang PaymentsView
+        await Shell.Current.GoToAsync(nameof(PaymentsView));
     }
 
     [RelayCommand]
     private async Task NavigateToStatistics()
     {
-        // Điều hướng đến trang Thống kê (sẽ tạo sau)
-        await Shell.Current.DisplayAlert("Thông báo", "Tính năng Thống kê đang phát triển", "OK");
+        // Đã cập nhật: Điều hướng đến trang StatisticsView
+        await Shell.Current.GoToAsync(nameof(StatisticsView));
     }
 
     [RelayCommand]
@@ -43,7 +43,6 @@ public partial class SettingsViewModel : BaseViewModel
         bool confirm = await Shell.Current.DisplayAlert("Xác nhận", "Bạn có muốn khóa ứng dụng ngay?", "Khóa", "Hủy");
         if (confirm)
         {
-            // Logic khóa app (ví dụ: chuyển về trang đăng nhập hoặc hiện popup nhập PIN)
             await Shell.Current.DisplayAlert("Đã khóa", "Ứng dụng đã được khóa an toàn.", "OK");
         }
     }

@@ -21,6 +21,10 @@
             <Setter Property="Shell.TabBarTitleColor" Value="#0369a1" />
             <Setter Property="Shell.TabBarUnselectedColor" Value="#94a3b8" />
         </Style>
+
+        <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
+            <Setter Property="Shell.NavBarIsVisible" Value="False" />
+        </Style>
     </Shell.Resources>
 
     <!-- TabBar Bottom Navigation -->

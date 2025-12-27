@@ -1,9 +1,10 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 
 namespace BanHangVip.ViewModels
@@ -17,5 +18,11 @@ namespace BanHangVip.ViewModels
         private string title;
 
         public bool IsNotBusy => !IsBusy;
+
+        [RelayCommand]
+        private async Task GoBack()
+        {
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }

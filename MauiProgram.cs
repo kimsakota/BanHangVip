@@ -1,10 +1,9 @@
-﻿using BanHangVip.Services;
+﻿using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
+using UraniumUI;
+using BanHangVip.Services;
 using BanHangVip.ViewModels;
 using BanHangVip.Views;
-using CommunityToolkit.Maui;
-using Microsoft.Extensions.Logging;
-using UraniumUI;
-
 
 namespace BanHangVip;
 
@@ -22,8 +21,6 @@ public static class MauiProgram
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-
-                fonts.AddMaterialIconFonts();
             });
 
         // Services
@@ -38,6 +35,10 @@ public static class MauiProgram
         builder.Services.AddTransient<ManageProductsViewModel>();
         builder.Services.AddTransient<ManageCustomersViewModel>();
 
+        builder.Services.AddTransient<PaymentsViewModel>();
+        builder.Services.AddTransient<StatisticsViewModel>();
+        builder.Services.AddTransient<OrderDetailViewModel>();
+
         // Views
         builder.Services.AddTransient<HomeView>();
         builder.Services.AddTransient<PendingOrdersView>();
@@ -47,7 +48,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ManageProductsView>();
         builder.Services.AddTransient<ManageCustomersView>();
 
-
+        builder.Services.AddTransient<PaymentsView>();
+        builder.Services.AddTransient<StatisticsView>();
+        builder.Services.AddTransient<OrderDetailView>();
 
 #if DEBUG
         builder.Logging.AddDebug();

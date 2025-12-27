@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using BanHangVip.Models;
 using BanHangVip.Services;
+using BanHangVip.Views; // Đảm bảo import Views
 using System.Collections.ObjectModel;
 
 namespace BanHangVip.ViewModels;
@@ -27,7 +28,6 @@ public partial class PendingOrdersViewModel : BaseViewModel
 
     private void LoadData()
     {
-        // Lấy dữ liệu mới nhất từ service
         PendingOrders = _dataService.GetPendingOrders();
     }
 
@@ -35,29 +35,26 @@ public partial class PendingOrdersViewModel : BaseViewModel
     private async Task ConfirmDelivery(Order order)
     {
         if (order == null) return;
-
-        bool confirm = await Shell.Current.DisplayAlert(
-            "Xác nhận",
-            $"Xác nhận giao đơn hàng cho {order.CustomerName}?\nTổng: {order.Items.Count} món",
-            "Giao ngay", "Hủy");
-
+        bool confirm = await Shell.Current.DisplayAlert("Xác nhận", $"Xác nhận giao đơn hàng cho {order.CustomerName}?", "Giao ngay", "Hủy");
         if (confirm)
         {
-            // Gọi service xử lý logic nghiệp vụ
             _dataService.DeliverOrder(order);
-
-            // Cập nhật lại danh sách hiển thị
             PendingOrders.Remove(order);
-
-            // Thông báo
             await Shell.Current.DisplayAlert("Thành công", "Đơn hàng đã được xác nhận giao!", "OK");
         }
     }
 
+    // Lệnh xem chi tiết (Thay thế cho EditOrder cũ)
     [RelayCommand]
-    private async Task EditOrder(Order order)
+    private async Task ViewDetail(Order order)
     {
-        // Tính năng mở rộng: Điều hướng sang trang chi tiết để sửa giá/cân nặng
-        await Shell.Current.DisplayAlert("Thông báo", "Tính năng sửa đơn đang phát triển", "OK");
+        if (order == null) return;
+
+        // Truyền object Order sang trang chi tiết
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { "Order", order }
+        };
+        await Shell.Current.GoToAsync(nameof(OrderDetailView), navigationParameter);
     }
 }

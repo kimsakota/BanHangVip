@@ -13,7 +13,9 @@ namespace BanHangVip.Models
         public List<OrderItem> Items { get; set; } = new();
         public OrderStatus Status { get; set; } 
 
-        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
+
+        public bool IsPaid { get; set; }
 
         public decimal TotalAmount => Items.Sum(i => i.Total);
     }

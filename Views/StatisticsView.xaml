@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             x:Class="BanHangVip.Views.StatisticsView"
+             Title="Thống kê"
+             BackgroundColor="#f8fafc"
+             Shell.NavBarIsVisible="False"
+             ios:Page.UseSafeArea="True">
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Header -->
+        <Grid Grid.Row="0" Padding="15,15" BackgroundColor="White" ColumnDefinitions="Auto, *">
+
+            <!-- Nút Back (Vector Icon) -->
+            <Border StrokeShape="RoundRectangle 20" 
+                    BackgroundColor="Transparent" 
+                    StrokeThickness="0" 
+                    HeightRequest="40" 
+                    WidthRequest="40" 
+                    Padding="0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
+                </Border.GestureRecognizers>
+                <Path Data="M20,11H7.83l5.59-5.59L12,4l-8,8l8,8l1.41-1.41L7.83,13H20V11z" 
+                      Fill="#1e293b" 
+                      Aspect="Uniform"
+                      HeightRequest="24"
+                      WidthRequest="24"
+                      HorizontalOptions="Center" 
+                      VerticalOptions="Center"/>
+            </Border>
+
+            <Label Grid.Column="1" 
+                   Text="Tổng quan kinh doanh" 
+                   TextColor="#1e293b" 
+                   FontAttributes="Bold" 
+                   FontSize="22" 
+                   VerticalOptions="Center"
+                   Margin="10,0,0,0"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20" Spacing="20">
+                <!-- Financial Cards -->
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="15" RowDefinitions="Auto, Auto" RowSpacing="15">
+
+                    <!-- Import Cost -->
+                    <Border Grid.Row="0" Grid.Column="0" StrokeShape="RoundRectangle 20" BackgroundColor="#fff1f2" StrokeThickness="0" Padding="15">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="VỐN NHẬP" TextColor="#e11d48" FontSize="11" FontAttributes="Bold"/>
+                            <Label Text="{Binding TotalImportCost, StringFormat='{0:N0}'}" TextColor="#be123c" FontSize="20" FontAttributes="Bold"/>
+                            <Label Text="{Binding TotalWeightImport, StringFormat='{0:N1} kg'}" TextColor="#fda4af" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Revenue -->
+                    <Border Grid.Row="0" Grid.Column="1" StrokeShape="RoundRectangle 20" BackgroundColor="#ecfdf5" StrokeThickness="0" Padding="15">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="DOANH THU" TextColor="#059669" FontSize="11" FontAttributes="Bold"/>
+                            <Label Text="{Binding TotalRevenue, StringFormat='{0:N0}'}" TextColor="#047857" FontSize="20" FontAttributes="Bold"/>
+                            <Label Text="Đã thu tiền" TextColor="#6ee7b7" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Profit (Full Width) -->
+                    <Border Grid.Row="1" Grid.ColumnSpan="2" StrokeShape="RoundRectangle 20" BackgroundColor="White" Stroke="#e2e8f0" StrokeThickness="1" Padding="20">
+                        <Border.Shadow>
+                            <Shadow Brush="#cbd5e1" Offset="0,4" Radius="10" Opacity="0.1"/>
+                        </Border.Shadow>
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                            <Label Text="LỢI NHUẬN TẠM TÍNH" TextColor="#64748b" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" CharacterSpacing="1"/>
+                            <Label Text="{Binding EstimatedProfit, StringFormat='{0:N0} đ'}" TextColor="#0369a1" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center"/>
+                            <Label Text="(Doanh thu thực tế - Vốn nhập)" TextColor="#94a3b8" FontSize="11" FontAttributes="Italic" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Sales Summary -->
+                <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" StrokeThickness="0" Padding="20">
+                    <Border.Shadow>
+                        <Shadow Brush="#cbd5e1" Offset="0,2" Radius="5" Opacity="0.1"/>
+                    </Border.Shadow>
+                    <Grid ColumnDefinitions="*, Auto">
+                        <VerticalStackLayout>
+                            <Label Text="Hàng đã xuất kho" TextColor="#1e293b" FontAttributes="Bold" FontSize="16"/>
+                            <Label Text="Tổng khối lượng bán ra" TextColor="#94a3b8" FontSize="12"/>
+                        </VerticalStackLayout>
+                        <Label Grid.Column="1" Text="{Binding TotalWeightSold, StringFormat='{0:N1} kg'}" TextColor="#0369a1" FontAttributes="Bold" FontSize="20" VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

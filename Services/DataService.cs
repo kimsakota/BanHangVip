@@ -95,5 +95,38 @@ namespace BanHangVip.Services
                 }
             }
         }
+
+        public ObservableCollection<Order> GetUnpaidOrders()
+        {
+            return new ObservableCollection<Order>(
+                _orders.Where(o => o.Status == OrderStatus.Delivered && !o.IsPaid)
+            );
+        }
+
+        public void ProcessPayment(string customerName)
+        {
+            var unpaidOrders = _orders
+                .Where(o => o.Status == OrderStatus.Delivered && !o.IsPaid && o.CustomerName == customerName)
+                .ToList();
+
+            foreach (var order in unpaidOrders)
+            {
+                order.IsPaid = true; // Đánh dấu đã trả
+
+                // Ghi lịch sử thu tiền
+                foreach (var item in order.Items)
+                {
+                    _history.Insert(0, new HistoryItem
+                    {
+                        Id = $"PAY-{DateTime.Now.Ticks}-{item.ProductId}",
+                        Type = "PAYMENT",
+                        ProductName = item.ProductName,
+                        Weight = item.Weight,
+                        Price = item.Price,
+                        Timestamp = DateTime.Now
+                    });
+                }
+            }
+        }
     }
 }

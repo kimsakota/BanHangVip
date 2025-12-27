@@ -26,5 +26,8 @@ namespace BanHangVip.Services
         void AddHistoryItem(HistoryItem item);
 
         void DeliverOrder(Order order);
+
+        ObservableCollection<Order> GetUnpaidOrders();
+        void ProcessPayment(string customerName);
     }
 }
