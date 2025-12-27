@@ -8,16 +8,20 @@
              BackgroundColor="#f8fafc">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Header -->
+        <!-- Header - ĐỒNG BỘ KÍCH THƯỚC -->
         <Grid Grid.Row="0" Padding="20,15" BackgroundColor="White">
+            <Grid.Shadow>
+                <Shadow Brush="#cbd5e1" Offset="0,2" Radius="4" Opacity="0.1"/>
+            </Grid.Shadow>
             <VerticalStackLayout>
                 <Label Text="Đơn chờ giao" 
                        TextColor="#1e293b" 
                        FontAttributes="Bold" 
-                       FontSize="24"/>
+                       FontSize="22"/>
                 <Label Text="Quản lý và xác nhận đơn xuất kho" 
                        TextColor="#64748b" 
-                       FontSize="14"/>
+                       FontSize="13"
+                       Margin="0,5,0,0"/>
             </VerticalStackLayout>
         </Grid>
 
@@ -83,13 +87,13 @@
 
                             <!-- Action Buttons -->
                             <Grid ColumnDefinitions="*, 2*" ColumnSpacing="10" Margin="0,5,0,0">
-                                <Button Text="SỬA GIÁ" 
+                                <Button Text="CHI TIẾT" 
                                         BackgroundColor="#f1f5f9" 
                                         TextColor="#475569" 
                                         FontAttributes="Bold"
                                         CornerRadius="12"
                                         HeightRequest="45"
-                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PendingOrdersViewModel}}, Path=EditOrderCommand}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:PendingOrdersViewModel}}, Path=ViewDetailCommand}"
                                         CommandParameter="{Binding .}"/>
                                 <Button Grid.Column="1" 
                                         Text="XÁC NHẬN GIAO" 

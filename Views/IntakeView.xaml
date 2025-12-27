@@ -9,47 +9,84 @@
 
     <Grid RowDefinitions="Auto, *">
         <!-- Header & Input Area -->
-        <Border Grid.Row="0" StrokeThickness="0" BackgroundColor="White" Padding="20">
+        <Border Grid.Row="0" StrokeThickness="0" BackgroundColor="White" Padding="20,15">
             <Border.Shadow>
                 <Shadow Brush="#cbd5e1" Offset="0,4" Radius="10" Opacity="0.1"/>
             </Border.Shadow>
             <VerticalStackLayout Spacing="15">
-                <Label Text="Nhập hàng vào kho" TextColor="#1e293b" FontAttributes="Bold" FontSize="20"/>
+                <!-- TIÊU ĐỀ ĐỒNG BỘ KÍCH THƯỚC -->
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Nhập hàng vào kho" 
+                           TextColor="#1e293b" 
+                           FontAttributes="Bold" 
+                           FontSize="22"/>
+                    <Label Text="Ghi nhận phiếu nhập kho mới" 
+                           TextColor="#64748b" 
+                           FontSize="13"/>
+                </VerticalStackLayout>
 
+                <!-- SỬA Ô NHẬP LIỆU - Tăng Height và loại bỏ Padding trong Border -->
                 <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
                     <!-- Weight Input -->
-                    <VerticalStackLayout Spacing="5">
-                        <Label Text="SỐ KG NHẬP" TextColor="#94a3b8" FontSize="10" FontAttributes="Bold"/>
-                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10.5" HeightRequest="50">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="SỐ KG NHẬP" TextColor="#94a3b8" FontSize="11" FontAttributes="Bold"/>
+                        <Border Stroke="#e2e8f0" 
+                                StrokeShape="RoundRectangle 12" 
+                                BackgroundColor="White"
+                                Padding="0"
+                                HeightRequest="60">
                             <Entry Text="{Binding InputWeight}" 
                                    Placeholder="0.0" 
                                    Keyboard="Numeric" 
                                    TextColor="#0369a1" 
                                    FontAttributes="Bold"
-                                   FontSize="18"/>
+                                   FontSize="18"
+                                   VerticalOptions="Fill"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"
+                                   BackgroundColor="Transparent"/>
                         </Border>
                     </VerticalStackLayout>
 
                     <!-- Price Input -->
-                    <VerticalStackLayout Grid.Column="1" Spacing="5">
-                        <Label Text="ĐƠN GIÁ (VNĐ)" TextColor="#94a3b8" FontSize="10" FontAttributes="Bold"/>
-                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10,5" HeightRequest="50">
+                    <VerticalStackLayout Grid.Column="1" Spacing="8">
+                        <Label Text="ĐƠN GIÁ (VNĐ)" TextColor="#94a3b8" FontSize="11" FontAttributes="Bold"/>
+                        <Border Stroke="#e2e8f0" 
+                                StrokeShape="RoundRectangle 12" 
+                                BackgroundColor="White"
+                                Padding="0"
+                                HeightRequest="60">
                             <Entry Text="{Binding InputPrice}" 
                                    Placeholder="0" 
                                    Keyboard="Numeric" 
                                    TextColor="#059669" 
                                    FontAttributes="Bold"
-                                   FontSize="18"/>
+                                   FontSize="18"
+                                   VerticalOptions="Fill"
+                                   VerticalTextAlignment="Center"
+                                   HorizontalTextAlignment="Center"
+                                   BackgroundColor="Transparent"/>
                         </Border>
                     </VerticalStackLayout>
                 </Grid>
 
                 <!-- Selected Product Preview -->
-                <Border BackgroundColor="#f0f9ff" StrokeShape="RoundRectangle 12" StrokeThickness="0" Padding="15" IsVisible="{Binding IsProductSelected}">
+                <Border BackgroundColor="#f0f9ff" 
+                        StrokeShape="RoundRectangle 12" 
+                        StrokeThickness="0" 
+                        Padding="15" 
+                        IsVisible="{Binding IsProductSelected}">
                     <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
                         <Label Text="{Binding SelectedProduct.Icon}" FontSize="24"/>
-                        <Label Text="{Binding SelectedProduct.Name}" TextColor="#0369a1" FontAttributes="Bold" VerticalOptions="Center"/>
-                        <Label Text="Đã chọn" TextColor="#94a3b8" FontSize="10" FontAttributes="Italic" VerticalOptions="Center"/>
+                        <Label Text="{Binding SelectedProduct.Name}" 
+                               TextColor="#0369a1" 
+                               FontAttributes="Bold" 
+                               VerticalOptions="Center"/>
+                        <Label Text="✓ Đã chọn" 
+                               TextColor="#94a3b8" 
+                               FontSize="11" 
+                               FontAttributes="Italic" 
+                               VerticalOptions="Center"/>
                     </HorizontalStackLayout>
                 </Border>
 
@@ -67,7 +104,11 @@
         <!-- Product List Selection -->
         <ScrollView Grid.Row="1" Padding="15">
             <VerticalStackLayout Spacing="10">
-                <Label Text="CHỌN HẢI SẢN" TextColor="#94a3b8" FontSize="12" FontAttributes="Bold" Margin="5,0"/>
+                <Label Text="CHỌN HẢI SẢN" 
+                       TextColor="#94a3b8" 
+                       FontSize="12" 
+                       FontAttributes="Bold" 
+                       Margin="5,10,5,0"/>
 
                 <CollectionView ItemsSource="{Binding Products}" SelectionMode="None">
                     <CollectionView.ItemsLayout>
@@ -75,26 +116,25 @@
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:Product">
-                            <Border StrokeShape="RoundRectangle 15" Stroke="#f1f5f9" BackgroundColor="White" Padding="10">
+                            <Border StrokeShape="RoundRectangle 15" 
+                                    Stroke="#e2e8f0" 
+                                    StrokeThickness="1"
+                                    BackgroundColor="White" 
+                                    Padding="12">
                                 <Border.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:IntakeViewModel}}, Path=SelectProductCommand}"
                                                           CommandParameter="{Binding .}"/>
                                 </Border.GestureRecognizers>
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="CommonStates">
-                                        <VisualState x:Name="Normal" />
-                                        <VisualState x:Name="Selected">
-                                            <VisualState.Setters>
-                                                <Setter Property="BackgroundColor" Value="#e0f2fe" />
-                                                <Setter Property="Stroke" Value="#0369a1" />
-                                            </VisualState.Setters>
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
 
-                                <VerticalStackLayout HorizontalOptions="Center" Spacing="5">
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="6">
                                     <Label Text="{Binding Icon}" FontSize="32" HorizontalOptions="Center"/>
-                                    <Label Text="{Binding Name}" TextColor="#334155" FontSize="11" FontAttributes="Bold" HorizontalOptions="Center" LineBreakMode="TailTruncation"/>
+                                    <Label Text="{Binding Name}" 
+                                           TextColor="#334155" 
+                                           FontSize="12" 
+                                           FontAttributes="Bold" 
+                                           HorizontalOptions="Center" 
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1"/>
                                 </VerticalStackLayout>
                             </Border>
                         </DataTemplate>

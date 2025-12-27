@@ -10,17 +10,21 @@
 
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <!-- Header -->
-        <Grid Grid.Row="0" Padding="20,10" BackgroundColor="White">
-            <Label Text="Danh sách hải sản" 
-                   TextColor="#1e293b"
-                   FontAttributes="Bold" 
-                   FontSize="24"/>
-            <Label Text="Chạm để nhập số kg" 
-                   TextColor="#64748b" 
-                   FontSize="14" 
-                   VerticalOptions="End" 
-                   TranslationY="20"/>
+        <!-- Header - ĐỒNG BỘ KÍCH THƯỚC -->
+        <Grid Grid.Row="0" Padding="20,15" BackgroundColor="White">
+            <Grid.Shadow>
+                <Shadow Brush="#cbd5e1" Offset="0,2" Radius="4" Opacity="0.1"/>
+            </Grid.Shadow>
+            <VerticalStackLayout>
+                <Label Text="Danh sách hải sản" 
+                       TextColor="#1e293b"
+                       FontAttributes="Bold" 
+                       FontSize="22"/>
+                <Label Text="Chạm để nhập số kg" 
+                       TextColor="#64748b" 
+                       FontSize="13" 
+                       Margin="0,5,0,0"/>
+            </VerticalStackLayout>
         </Grid>
 
         <!-- Product List -->
@@ -33,12 +37,14 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
+                    <!-- SỬA VIỀN SẢN PHẨM - Thêm Stroke và StrokeThickness rõ ràng -->
                     <Border StrokeShape="RoundRectangle 20"
-                            StrokeThickness="0"
+                            Stroke="#e2e8f0"
+                            StrokeThickness="1"
                             BackgroundColor="White"
                             Padding="15">
                         <Border.Shadow>
-                            <Shadow Brush="#cbd5e1" Offset="2,4" Radius="8" Opacity="0.3"/>
+                            <Shadow Brush="#cbd5e1" Offset="2,4" Radius="8" Opacity="0.15"/>
                         </Border.Shadow>
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ProductTappedCommand}"
@@ -51,14 +57,19 @@
                                    TextColor="#334155" 
                                    FontAttributes="Bold" 
                                    FontSize="16" 
-                                   HorizontalOptions="Center"/>
-                            <Label Text="{Binding DefaultPrice, StringFormat='{0:N0} đ/kg'}"
-                                   TextColor="#059669"
-                                   FontSize="12"
-                                   FontAttributes="Bold"
                                    HorizontalOptions="Center"
-                                   BackgroundColor="#ecfdf5"
-                                   Padding="8,4"/>
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="1"/>
+                            <Border StrokeShape="RoundRectangle 8" 
+                                    BackgroundColor="#ecfdf5" 
+                                    StrokeThickness="0"
+                                    Padding="10,5"
+                                    HorizontalOptions="Center">
+                                <Label Text="{Binding DefaultPrice, StringFormat='{0:N0} đ/kg'}"
+                                       TextColor="#059669"
+                                       FontSize="12"
+                                       FontAttributes="Bold"/>
+                            </Border>
                         </VerticalStackLayout>
                     </Border>
                 </DataTemplate>
