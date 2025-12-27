@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    x:Class="BanHangVip.Views.Popups.BeautifulNumericPopup">
+    <!-- Size=1 để full width -->
+
+    <!-- Sử dụng AbsoluteLayout để kiểm soát chính xác -->
+    <AbsoluteLayout BackgroundColor="Transparent">
+
+        <!-- Overlay mờ -->
+        <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                 AbsoluteLayout.LayoutFlags="All"
+                 BackgroundColor="#80000000"
+                 InputTransparent="False"/>
+
+        <!-- Bottom-sheet - chỉ hiển thị phần này -->
+        <Border
+            AbsoluteLayout.LayoutBounds="0,1,1,AutoSize"
+            AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+            BackgroundColor="{AppThemeBinding Light=White, Dark=#1C1C1E}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 28,28,0,0">
+            <!-- Chỉ bo góc trên -->
+
+            <Border.Shadow>
+                <Shadow Brush="#000000" Offset="0,-6" Radius="24" Opacity="0.22" />
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,*"
+                  RowSpacing="14"
+                  Padding="18,12,18,34">
+
+                <!-- Handle bar -->
+                <Grid Grid.Row="0" HeightRequest="18">
+                    <Border
+                        HeightRequest="5"
+                        WidthRequest="52"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        BackgroundColor="{AppThemeBinding Light=#E2E8F0, Dark=#3A3A3C}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 3" />
+                </Grid>
+
+                <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <VerticalStackLayout Spacing="3">
+                        <Label x:Name="ItemNameLabel"
+                               Text="Tên sản phẩm"
+                               FontFamily="OpenSansSemibold"
+                               FontSize="18"
+                               LineBreakMode="TailTruncation"
+                               MaxLines="2"
+                               TextColor="{AppThemeBinding Light=#0F172A, Dark=White}" />
+                        <Label Text="Nhập số lượng (Kg)"
+                               FontSize="13"
+                               TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                    </VerticalStackLayout>
+
+                    <!-- Nút đóng -->
+                    <Border Grid.Column="1"
+                            HeightRequest="36"
+                            WidthRequest="36"
+                            StrokeThickness="1"
+                            Stroke="{AppThemeBinding Light=#E2E8F0, Dark=#3A3A3C}"
+                            BackgroundColor="{AppThemeBinding Light=#F1F5F9, Dark=#2C2C2E}"
+                            StrokeShape="RoundRectangle 18"
+                            HorizontalOptions="End"
+                            VerticalOptions="Start">
+
+                        <ImageButton Clicked="OnCancelClicked"
+                                     BackgroundColor="Transparent"
+                                     Padding="0"
+                                     HeightRequest="36"
+                                     WidthRequest="36">
+
+                            <ImageButton.Source>
+                                <FontImageSource Glyph="✕"
+                                                 FontFamily="OpenSansRegular"
+                                                 Size="18"
+                                                 Color="{AppThemeBinding Light=#64748B, Dark=#CBD5E1}" />
+                            </ImageButton.Source>
+                        </ImageButton>
+
+                    </Border>
+                </Grid>
+
+                <!-- Display -->
+                <Border Grid.Row="2"
+                        StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#E2E8F0, Dark=#3A3A3C}"
+                        BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#2C2C2E}"
+                        StrokeShape="RoundRectangle 16"
+                        Padding="16,10">
+
+                    <Label x:Name="DisplayLabel"
+                           Text="0"
+                           FontSize="36"
+                           FontFamily="OpenSansSemibold"
+                           HorizontalOptions="End"
+                           MaxLines="1"
+                           LineBreakMode="HeadTruncation"
+                           TextColor="{AppThemeBinding Light=#0369A1, Dark=#60A5FA}" />
+                </Border>
+
+                <!-- Keypad -->
+                <Grid Grid.Row="3"
+                      ColumnDefinitions="*,*,*,*"
+                      RowDefinitions="Auto,Auto,Auto,Auto"
+                      ColumnSpacing="10"
+                      RowSpacing="10"
+                      MinimumHeightRequest="280">
+
+                    <Grid.Resources>
+                        <Style x:Key="NumButtonStyle" TargetType="Button">
+                            <Setter Property="FontSize" Value="22" />
+                            <Setter Property="FontFamily" Value="OpenSansSemibold" />
+                            <Setter Property="CornerRadius" Value="16" />
+                            <Setter Property="HeightRequest" Value="62" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#F1F5F9, Dark=#2C2C2E}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light=#0F172A, Dark=White}" />
+                            <Setter Property="BorderColor" Value="Transparent" />
+                        </Style>
+
+                        <Style x:Key="FuncButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#E2E8F0, Dark=#3A3A3C}" />
+                            <Setter Property="TextColor" Value="{AppThemeBinding Light=#475569, Dark=#D4D4D8}" />
+                        </Style>
+
+                        <Style x:Key="OkButtonStyle" TargetType="Button" BasedOn="{StaticResource NumButtonStyle}">
+                            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=#0284C7, Dark=#0EA5E9}" />
+                            <Setter Property="TextColor" Value="White" />
+                            <Setter Property="FontSize" Value="16" />
+                            <Setter Property="TextTransform" Value="Uppercase" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Button Text="7" Grid.Row="0" Grid.Column="0" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="8" Grid.Row="0" Grid.Column="1" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="9" Grid.Row="0" Grid.Column="2" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="C" Grid.Row="0" Grid.Column="3" Style="{StaticResource FuncButtonStyle}" 
+                            Clicked="OnClearClicked" 
+                            TextColor="{AppThemeBinding Light=#EF4444, Dark=#FCA5A5}"/>
+
+                    <Button Text="4" Grid.Row="1" Grid.Column="0" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="5" Grid.Row="1" Grid.Column="1" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="6" Grid.Row="1" Grid.Column="2" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="⌫" Grid.Row="1" Grid.Column="3" Style="{StaticResource FuncButtonStyle}" 
+                            Clicked="OnBackspaceClicked" FontSize="18"
+                            TextColor="{AppThemeBinding Light=#475569, Dark=#D4D4D8}"/>
+
+                    <Button Text="1" Grid.Row="2" Grid.Column="0" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="2" Grid.Row="2" Grid.Column="1" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="3" Grid.Row="2" Grid.Column="2" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+
+                    <Button Text="LƯU" Grid.Row="2" Grid.Column="3" Grid.RowSpan="2"
+                            Style="{StaticResource OkButtonStyle}"
+                            Clicked="OnConfirmClicked"/>
+
+                    <Button Text="0" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource NumButtonStyle}" Clicked="OnNumberClicked"/>
+                    <Button Text="." Grid.Row="3" Grid.Column="2" Style="{StaticResource NumButtonStyle}" 
+                            Clicked="OnNumberClicked" 
+                            FontAttributes="Bold"
+                            TextColor="{AppThemeBinding Light=#475569, Dark=#D4D4D8}"/>
+                </Grid>
+
+            </Grid>
+        </Border>
+    </AbsoluteLayout>
+</toolkit:Popup>

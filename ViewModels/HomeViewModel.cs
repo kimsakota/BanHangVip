@@ -1,13 +1,10 @@
 ﻿using BanHangVip.Models;
 using BanHangVip.Services;
+using BanHangVip.Views.Popups; // Đảm bảo đã import namespace của Popup
+using CommunityToolkit.Maui.Views; // Cần thiết để gọi ShowPopupAsync
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BanHangVip.ViewModels
 {
@@ -26,7 +23,10 @@ namespace BanHangVip.ViewModels
         [NotifyPropertyChangedFor(nameof(IsCartVisible))]
         private int cartItemCount;
 
+        // Tính tổng số kg trong giỏ
         public double TotalCartWeight => CurrentCart.Sum(i => i.Weight);
+
+        // Hiện Bottom Sheet nếu giỏ hàng có đồ
         public bool IsCartVisible => CurrentCart.Count > 0;
 
         public HomeViewModel(IDataService dataService)
@@ -39,15 +39,35 @@ namespace BanHangVip.ViewModels
         [RelayCommand]
         private async Task ProductTapped(Product product)
         {
-            // Hiển thị Popup nhập cân nặng (Sử dụng DisplayPromptAsync cho đơn giản, hoặc Custom Popup)
-            string result = await Shell.Current.DisplayPromptAsync(
-                title: product.Name,
-                message: $"Nhập khối lượng (kg) cho {product.Name}",
-                placeholder: "Ví dụ: 1.5",
-                keyboard: Keyboard.Numeric);
+            if (product == null) return;
 
-            if (double.TryParse(result, out double weight) && weight > 0)
+            // 1. Gọi Popup đẹp "BeautifulNumericPopup" thay vì DisplayPromptAsync
+            var popup = new BeautifulNumericPopup(product.Name);
+
+            // 2. Chờ người dùng nhấn "NHẬP" và lấy kết quả
+            // Lưu ý: ShowPopupAsync trả về object?, cần ép kiểu sang double
+            var result = await Shell.Current.ShowPopupAsync(popup);
+
+            // 3. Xử lý kết quả trả về
+            if (result is double weight && weight > 0)
             {
+                AddOrUpdateItem(product, weight);
+            }
+        }
+
+        private void AddOrUpdateItem(Product product, double weight)
+        {
+            // Kiểm tra xem món này đã có trong giỏ chưa
+            var existingItem = CurrentCart.FirstOrDefault(x => x.ProductId == product.Id);
+
+            if (existingItem != null)
+            {
+                // Nếu có rồi thì cộng thêm số lượng (kg)
+                existingItem.Weight += weight;
+            }
+            else
+            {
+                // Nếu chưa có thì tạo mới
                 var newItem = new OrderItem
                 {
                     ProductId = product.Id,
@@ -55,10 +75,11 @@ namespace BanHangVip.ViewModels
                     Weight = weight,
                     Price = product.DefaultPrice
                 };
-
                 CurrentCart.Add(newItem);
-                UpdateCartMetrics();
             }
+
+            // Cập nhật lại số lượng và tổng kg để giao diện thay đổi
+            UpdateCartMetrics();
         }
 
         [RelayCommand]
@@ -84,7 +105,8 @@ namespace BanHangVip.ViewModels
             CurrentCart.Clear();
             UpdateCartMetrics();
 
-            //await Shell.Current.DisplayAlert("Thành công", "Đã lưu đơn hàng chờ giao!", "OK");
+            // Thông báo nhỏ để người dùng biết đã lưu (Tuỳ chọn)
+            // await Shell.Current.DisplayToastAsync("Đã lưu đơn hàng");
         }
 
         [RelayCommand]
@@ -100,8 +122,10 @@ namespace BanHangVip.ViewModels
         private void UpdateCartMetrics()
         {
             CartItemCount = CurrentCart.Count;
+            // Thông báo cho giao diện biết các thuộc tính này đã thay đổi
             OnPropertyChanged(nameof(TotalCartWeight));
             OnPropertyChanged(nameof(IsCartVisible));
+            OnPropertyChanged(nameof(CurrentCart)); // Đôi khi cần thiết để CollectionView refresh
         }
     }
 }

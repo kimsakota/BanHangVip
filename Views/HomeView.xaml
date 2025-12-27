@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:material="http://schemas.enis-solutions.com/dotnet/maui/uraniumui/material"
              xmlns:vm="clr-namespace:BanHangVip.ViewModels"
              xmlns:models="clr-namespace:BanHangVip.Models"
              x:Class="BanHangVip.Views.HomeView" 
@@ -10,8 +9,7 @@
 
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <!-- Header - ĐỒNG BỘ KÍCH THƯỚC -->
-        <Grid Grid.Row="0" Padding="20,15" BackgroundColor="White">
+        <Grid Grid.Row="0" Padding="20,15" BackgroundColor="White" ZIndex="1">
             <Grid.Shadow>
                 <Shadow Brush="#cbd5e1" Offset="0,2" Radius="4" Opacity="0.1"/>
             </Grid.Shadow>
@@ -27,7 +25,6 @@
             </VerticalStackLayout>
         </Grid>
 
-        <!-- Product List -->
         <CollectionView Grid.Row="1" 
                         ItemsSource="{Binding Products}"
                         SelectionMode="None"
@@ -37,22 +34,26 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Product">
-                    <!-- SỬA VIỀN SẢN PHẨM - Thêm Stroke và StrokeThickness rõ ràng -->
+
                     <Border StrokeShape="RoundRectangle 20"
                             Stroke="#e2e8f0"
                             StrokeThickness="1"
                             BackgroundColor="White"
                             Padding="15">
+
                         <Border.Shadow>
                             <Shadow Brush="#cbd5e1" Offset="2,4" Radius="8" Opacity="0.15"/>
                         </Border.Shadow>
+
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=ProductTappedCommand}"
-                                                  CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer 
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ProductTappedCommand}"
+                                CommandParameter="{Binding .}"/>
                         </Border.GestureRecognizers>
 
                         <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
                             <Label Text="{Binding Icon}" FontSize="50" HorizontalOptions="Center"/>
+
                             <Label Text="{Binding Name}" 
                                    TextColor="#334155" 
                                    FontAttributes="Bold" 
@@ -60,6 +61,7 @@
                                    HorizontalOptions="Center"
                                    LineBreakMode="TailTruncation"
                                    MaxLines="1"/>
+
                             <Border StrokeShape="RoundRectangle 8" 
                                     BackgroundColor="#ecfdf5" 
                                     StrokeThickness="0"
@@ -76,14 +78,15 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <!-- Current Order Panel (Bottom Sheet style) -->
         <Border Grid.Row="2" 
                 IsVisible="{Binding IsCartVisible}"
                 StrokeShape="RoundRectangle 20,20,0,0"
                 BackgroundColor="White"
                 Padding="20"
                 Margin="0"
-                StrokeThickness="0">
+                StrokeThickness="0"
+                ZIndex="1">
+
             <Border.Shadow>
                 <Shadow Brush="Black" Offset="0,-4" Radius="10" Opacity="0.1"/>
             </Border.Shadow>
@@ -92,7 +95,7 @@
                 <Grid ColumnDefinitions="*, Auto">
                     <VerticalStackLayout>
                         <Label Text="ĐƠN HIỆN TẠI" FontSize="10" TextColor="#94a3b8" FontAttributes="Bold"/>
-                        <HorizontalStackLayout Spacing="5">
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="End">
                             <Label Text="{Binding CartItemCount}" FontSize="20" TextColor="#0369a1" FontAttributes="Bold"/>
                             <Label Text="món" FontSize="20" TextColor="#0369a1" FontAttributes="Bold"/>
                             <Label Text="•" FontSize="20" TextColor="#cbd5e1" Margin="5,0"/>
@@ -111,21 +114,37 @@
                             Padding="20,0"/>
                 </Grid>
 
-                <!-- Mini list of items inside the panel -->
                 <CollectionView ItemsSource="{Binding CurrentCart}" HeightRequest="100">
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:OrderItem">
-                            <Border StrokeShape="RoundRectangle 12" BackgroundColor="#f1f5f9" Padding="10" WidthRequest="100">
+                            <Border StrokeShape="RoundRectangle 12" 
+                                    BackgroundColor="#f1f5f9" 
+                                    Padding="10" 
+                                    WidthRequest="100"
+                                    StrokeThickness="0">
                                 <VerticalStackLayout>
-                                    <Label Text="{Binding ProductName}" FontAttributes="Bold" TextColor="#334155" LineBreakMode="TailTruncation"/>
-                                    <Label Text="{Binding Weight, StringFormat='{0:F1} kg'}" TextColor="#0369a1"/>
-                                    <ImageButton Source="{FontImage Glyph='X', Color='#ef4444', Size=12}" 
+                                    <Label Text="{Binding ProductName}" 
+                                           FontAttributes="Bold" 
+                                           TextColor="#334155" 
+                                           LineBreakMode="TailTruncation"/>
+
+                                    <Label Text="{Binding Weight, StringFormat='{0:F1} kg'}" 
+                                           TextColor="#0369a1"
+                                           FontSize="12"/>
+
+                                    <ImageButton Source="{FontImage Glyph='X', FontFamily='OpenSansRegular', Color='#ef4444', Size=12}" 
                                                  HorizontalOptions="End"
-                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomeViewModel}}, Path=RemoveItemCommand}"
-                                                 CommandParameter="{Binding .}"/>
+                                                 HeightRequest="20"
+                                                 WidthRequest="20"
+                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveItemCommand}"
+                                                 CommandParameter="{Binding .}">
+                                        <ImageButton.Shadow>
+                                            <Shadow Brush="Red" Offset="0,1" Radius="2" Opacity="0.1"/>
+                                        </ImageButton.Shadow>
+                                    </ImageButton>
                                 </VerticalStackLayout>
                             </Border>
                         </DataTemplate>
