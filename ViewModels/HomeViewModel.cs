@@ -84,7 +84,7 @@ namespace BanHangVip.ViewModels
             CurrentCart.Clear();
             UpdateCartMetrics();
 
-            await Shell.Current.DisplayAlert("Thành công", "Đã lưu đơn hàng chờ giao!", "OK");
+            //await Shell.Current.DisplayAlert("Thành công", "Đã lưu đơn hàng chờ giao!", "OK");
         }
 
         [RelayCommand]

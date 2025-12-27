@@ -35,13 +35,11 @@ public partial class PendingOrdersViewModel : BaseViewModel
     private async Task ConfirmDelivery(Order order)
     {
         if (order == null) return;
-        bool confirm = await Shell.Current.DisplayAlert("Xác nhận", $"Xác nhận giao đơn hàng cho {order.CustomerName}?", "Giao ngay", "Hủy");
-        if (confirm)
-        {
-            _dataService.DeliverOrder(order);
-            PendingOrders.Remove(order);
-            await Shell.Current.DisplayAlert("Thành công", "Đơn hàng đã được xác nhận giao!", "OK");
-        }
+        //bool confirm = await Shell.Current.DisplayAlert("Xác nhận", $"Xác nhận giao đơn hàng cho {order.CustomerName}?", "Giao ngay", "Hủy");
+        
+        _dataService.DeliverOrder(order);
+        PendingOrders.Remove(order);
+        //await Shell.Current.DisplayAlert("Thành công", "Đơn hàng đã được xác nhận giao!", "OK");
     }
 
     // Lệnh xem chi tiết (Thay thế cho EditOrder cũ)

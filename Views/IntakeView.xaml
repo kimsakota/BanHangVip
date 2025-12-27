@@ -20,7 +20,7 @@
                     <!-- Weight Input -->
                     <VerticalStackLayout Spacing="5">
                         <Label Text="SỐ KG NHẬP" TextColor="#94a3b8" FontSize="10" FontAttributes="Bold"/>
-                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10,5" HeightRequest="50">
+                        <Border Stroke="#e2e8f0" StrokeShape="RoundRectangle 12" Padding="10.5" HeightRequest="50">
                             <Entry Text="{Binding InputWeight}" 
                                    Placeholder="0.0" 
                                    Keyboard="Numeric" 
