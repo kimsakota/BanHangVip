@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               x:Class="BanHangVip.Views.ProductWeightPopup">
+
+    <!-- Popup Container -->
+    <Border StrokeShape="RoundRectangle 25"
+            BackgroundColor="White"
+            StrokeThickness="0"
+            Padding="0"
+            WidthRequest="320"
+            HeightRequest="380">
+
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="0,10" Radius="30" Opacity="0.3"/>
+        </Border.Shadow>
+
+        <Grid RowDefinitions="Auto, *, Auto, Auto">
+
+            <!-- Header với Icon sản phẩm -->
+            <Border Grid.Row="0" 
+                    BackgroundColor="#0369a1" 
+                    StrokeShape="RoundRectangle 25,25,0,0"
+                    StrokeThickness="0"
+                    Padding="20,25,20,20">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <Label Text="{Binding ProductIcon}" 
+                           FontSize="60" 
+                           HorizontalOptions="Center"/>
+                    <Label Text="{Binding ProductName}" 
+                           TextColor="White" 
+                           FontAttributes="Bold" 
+                           FontSize="22" 
+                           HorizontalOptions="Center"/>
+                    <Border BackgroundColor="#33ffffff" 
+                            StrokeThickness="0" 
+                            StrokeShape="RoundRectangle 8" 
+                            Padding="12,6"
+                            HorizontalOptions="Center">
+                        <Label Text="{Binding DefaultPrice, StringFormat='{0:N0} đ/kg'}" 
+                               TextColor="White" 
+                               FontSize="14"
+                               FontAttributes="Bold"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Input Area -->
+            <VerticalStackLayout Grid.Row="1" 
+                                 Padding="25,30,25,20" 
+                                 Spacing="15" 
+                                 VerticalOptions="Center">
+
+                <Label Text="NHẬP SỐ KG" 
+                       TextColor="#94a3b8" 
+                       FontSize="12" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center"
+                       CharacterSpacing="1"/>
+
+                <!-- Ô nhập số lớn, nổi bật -->
+                <Border Stroke="#e2e8f0" 
+                        StrokeShape="RoundRectangle 20" 
+                        BackgroundColor="#f8fafc"
+                        Padding="0"
+                        HeightRequest="90">
+                    <Entry x:Name="WeightEntry"
+                           Text="{Binding Weight, Mode=TwoWay}" 
+                           Placeholder="0.0" 
+                           Keyboard="Numeric" 
+                           TextColor="#0369a1" 
+                           FontAttributes="Bold"
+                           FontSize="40"
+                           VerticalOptions="Fill"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Center"
+                           BackgroundColor="Transparent"
+                           Completed="OnEntryCompleted"/>
+                </Border>
+
+                <!-- Tổng tiền tạm tính -->
+                <Border BackgroundColor="#f0f9ff" 
+                        StrokeShape="RoundRectangle 12" 
+                        StrokeThickness="0" 
+                        Padding="15,10">
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="Tạm tính" 
+                               TextColor="#64748b" 
+                               FontSize="13" 
+                               VerticalOptions="Center"/>
+                        <Label Grid.Column="1" 
+                               Text="{Binding TotalAmount, StringFormat='{0:N0} đ'}" 
+                               TextColor="#0369a1" 
+                               FontSize="18" 
+                               FontAttributes="Bold" 
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- Quick Select Buttons -->
+            <Grid Grid.Row="2" 
+                  ColumnDefinitions="*, *, *, *" 
+                  ColumnSpacing="10" 
+                  Padding="25,0,25,20">
+                <Button Text="0.5" 
+                        Clicked="OnQuickSelect"
+                        BackgroundColor="#f1f5f9" 
+                        TextColor="#475569" 
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="45"
+                        FontSize="16"/>
+                <Button Grid.Column="1" 
+                        Text="1.0" 
+                        Clicked="OnQuickSelect"
+                        BackgroundColor="#f1f5f9" 
+                        TextColor="#475569" 
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="45"
+                        FontSize="16"/>
+                <Button Grid.Column="2" 
+                        Text="2.0" 
+                        Clicked="OnQuickSelect"
+                        BackgroundColor="#f1f5f9" 
+                        TextColor="#475569" 
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="45"
+                        FontSize="16"/>
+                <Button Grid.Column="3" 
+                        Text="5.0" 
+                        Clicked="OnQuickSelect"
+                        BackgroundColor="#f1f5f9" 
+                        TextColor="#475569" 
+                        FontAttributes="Bold"
+                        CornerRadius="12"
+                        HeightRequest="45"
+                        FontSize="16"/>
+            </Grid>
+
+            <!-- Action Buttons -->
+            <Grid Grid.Row="3" 
+                  ColumnDefinitions="*, 2*" 
+                  ColumnSpacing="15" 
+                  Padding="25,0,25,25">
+                <Button Text="HỦY" 
+                        Clicked="OnCancel"
+                        BackgroundColor="#fee2e2" 
+                        TextColor="#ef4444" 
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="55"/>
+                <Button Grid.Column="1" 
+                        Text="THÊM VÀO ĐƠN" 
+                        Clicked="OnConfirm"
+                        BackgroundColor="#0369a1" 
+                        TextColor="White" 
+                        FontAttributes="Bold"
+                        CornerRadius="15"
+                        HeightRequest="55"/>
+            </Grid>
+
+        </Grid>
+    </Border>
+
+</toolkit:Popup>

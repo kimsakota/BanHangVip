@@ -43,8 +43,6 @@ public partial class PaymentsViewModel : BaseViewModel
             .Select(g => new CustomerDebt
             {
                 CustomerName = g.Key,
-                // SỬA LỖI: Tính tổng tiền trực tiếp từ danh sách Items
-                // (decimal)i.Weight * i.Price thay vì gọi o.TotalValue
                 TotalAmount = g.Sum(o => o.Items.Sum(i => (decimal)i.Weight * i.Price)),
                 OrderCount = g.Count()
             })
