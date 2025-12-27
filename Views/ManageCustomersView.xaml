@@ -2,18 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:BanHangVip.ViewModels"
+             xmlns:models="clr-namespace:BanHangVip.Models"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              x:Class="BanHangVip.Views.ManageCustomersView"
-             Title="Quản lý Khách hàng"
+             Title="Khách Hàng"
              BackgroundColor="#f8fafc"
              Shell.NavBarIsVisible="False"
              ios:Page.UseSafeArea="True">
 
     <Grid RowDefinitions="Auto, *">
-        <!-- Header -->
         <Grid Grid.Row="0" Padding="15,15" BackgroundColor="White" ColumnDefinitions="Auto, *, Auto">
 
-            <!-- Nút Back dùng Vector Icon (Path) thay vì Text để tránh lỗi font -->
             <Border StrokeShape="RoundRectangle 20" 
                     BackgroundColor="Transparent" 
                     StrokeThickness="0" 
@@ -23,7 +22,6 @@
                 <Border.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}"/>
                 </Border.GestureRecognizers>
-                <!-- Hình mũi tên vẽ bằng Path -->
                 <Path Data="M20,11H7.83l5.59-5.59L12,4l-8,8l8,8l1.41-1.41L7.83,13H20V11z" 
                       Fill="#1e293b" 
                       Aspect="Uniform"
@@ -34,42 +32,70 @@
             </Border>
 
             <Label Grid.Column="1" 
-                   Text="Khách hàng" 
+                   Text="Danh sách khách hàng" 
                    TextColor="#1e293b" 
                    FontAttributes="Bold" 
                    FontSize="20" 
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"/>
+                   VerticalOptions="Center"
+                   Margin="10,0,0,0"/>
 
-            <!-- Nút Thêm -->
-            <Button Grid.Column="2"
-                    Text="+" 
-                    Command="{Binding AddCustomerCommand}"
-                    BackgroundColor="#0369a1" 
-                    TextColor="White" 
-                    WidthRequest="40" 
-                    HeightRequest="40" 
-                    CornerRadius="20"
-                    Padding="0"
-                    FontSize="24"/>
+            <Border Grid.Column="2"
+                    StrokeShape="RoundRectangle 12"
+                    BackgroundColor="#eff6ff"
+                    StrokeThickness="0"
+                    HeightRequest="40"
+                    Padding="15,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding AddCustomerCommand}"/>
+                </Border.GestureRecognizers>
+                <Label Text="+ Thêm" 
+                       TextColor="#2563eb" 
+                       FontAttributes="Bold" 
+                       VerticalOptions="Center" 
+                       HorizontalOptions="Center"/>
+            </Border>
         </Grid>
 
-        <!-- Danh sách -->
         <CollectionView Grid.Row="1" ItemsSource="{Binding Customers}" Margin="15">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center" Spacing="10" Margin="0,50,0,0">
+                    <Label Text="👥" FontSize="60" HorizontalOptions="Center"/>
+                    <Label Text="Chưa có khách hàng nào" TextColor="#94a3b8" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="15"/>
             </CollectionView.ItemsLayout>
+
             <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="x:String">
-                    <Border StrokeShape="RoundRectangle 15" BackgroundColor="White" Padding="15" StrokeThickness="0">
+                <DataTemplate x:DataType="models:Customer">
+                    <Border StrokeShape="RoundRectangle 20" BackgroundColor="White" Padding="15" StrokeThickness="0">
                         <Border.Shadow>
-                            <Shadow Brush="#cbd5e1" Offset="1,2" Radius="3" Opacity="0.1"/>
+                            <Shadow Brush="#cbd5e1" Offset="2,4" Radius="5" Opacity="0.1"/>
                         </Border.Shadow>
-                        <Grid ColumnDefinitions="Auto, *">
-                            <Border StrokeShape="RoundRectangle 20" BackgroundColor="#f0f9ff" WidthRequest="40" HeightRequest="40" StrokeThickness="0" Margin="0,0,15,0">
-                                <Label Text="👤" HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                        <Grid ColumnDefinitions="50, *" ColumnSpacing="15">
+                            <Border Grid.Column="0" 
+                                    StrokeShape="RoundRectangle 25" 
+                                    HeightRequest="50" WidthRequest="50"
+                                    BackgroundColor="#e0f2fe"
+                                    StrokeThickness="0">
+                                <Label Text="{Binding Avatar}" 
+                                       HorizontalOptions="Center" VerticalOptions="Center"
+                                       FontSize="20" FontAttributes="Bold"
+                                       TextColor="#0284c7"/>
                             </Border>
-                            <Label Grid.Column="1" Text="{Binding .}" TextColor="#334155" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="{Binding Name}" 
+                                       TextColor="#1e293b" 
+                                       FontAttributes="Bold" 
+                                       FontSize="16"/>
+                                <Label Text="{Binding Phone}" 
+                                       TextColor="#64748b" 
+                                       FontSize="14"/>
+                            </VerticalStackLayout>
                         </Grid>
                     </Border>
                 </DataTemplate>

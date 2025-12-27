@@ -29,9 +29,10 @@ namespace BanHangVip.Services
 
             _customers = new ObservableCollection<Customer>
             {
-                new Customer { Id = "1", Name = "Khách Lẻ", Phone = "", Avatar = "K" },
-                new Customer { Id = "2", Name = "Chị Mai", Phone = "098xxx", Avatar = "M" },
-                new Customer { Id = "3", Name = "Anh Thọ", Phone = "091xxx", Avatar = "T" },
+                new Customer { Id = "1", Name = "Nhà Mai", Phone = "098xxx", Avatar = "M" },
+                new Customer { Id = "2", Name = "Nhà Nguyệt", Phone = "091xxx", Avatar = "N" },
+                new Customer { Id = "3", Name = "Nhà Thọ", Phone = "091xxx", Avatar = "T" },
+                new Customer { Id = "4", Name = "Khách Lẻ", Phone = "", Avatar = "K" }
             };
 
             _orders = new ObservableCollection<Order>();
@@ -43,6 +44,14 @@ namespace BanHangVip.Services
 
         public ObservableCollection<Customer> GetCustomers() => _customers;
         public void AddCustomer(Customer customer) => _customers.Add(customer);
+
+        public void DeleteCustomer(Customer customer)
+        {
+            if (_customers.Contains(customer))
+            {
+                _customers.Remove(customer);
+            }
+        }
 
         public void UpdateProduct(Product product)
         {

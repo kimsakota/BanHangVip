@@ -3,7 +3,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="BanHangVip.Views.Popups.BeautifulNumericPopup">
+    x:Class="BanHangVip.Views.Popups.BeautifulNumericPopup"
+    Color="Transparent">
     <!-- Size=1 để full width -->
 
     <!-- Sử dụng AbsoluteLayout để kiểm soát chính xác -->
