@@ -14,6 +14,9 @@ namespace BanHangVip.Services
         ObservableCollection<Product> GetProducts();
         void UpdateProduct(Product product);
 
+        ObservableCollection<Customer> GetCustomers();
+        void AddCustomer(Customer customer);
+
         // Đơn hàng
         ObservableCollection<Order> GetOrders();
         ObservableCollection<Order> GetPendingOrders();

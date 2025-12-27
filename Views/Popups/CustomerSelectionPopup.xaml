@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:models="clr-namespace:BanHangVip.Models"
+               x:Class="BanHangVip.Views.Popups.CustomerSelectionPopup"
+               CanBeDismissedByTappingOutsideOfPopup="True">
+
+    <AbsoluteLayout BackgroundColor="Transparent">
+        <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+                 BackgroundColor="#80000000"/>
+
+        <Border AbsoluteLayout.LayoutBounds="0,1,1,AutoSize"
+                AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1C1C1E}"
+                StrokeShape="RoundRectangle 28,28,0,0"
+                Padding="0,0,0,20">
+
+            <Grid RowDefinitions="Auto, Auto, *" RowSpacing="10" MaximumHeightRequest="500">
+
+                <BoxView Grid.Row="0" HeightRequest="5" WidthRequest="50" 
+                         Color="{AppThemeBinding Light=#E2E8F0, Dark=#3A3A3C}" 
+                         CornerRadius="2.5" Margin="0,10,0,0" HorizontalOptions="Center"/>
+
+                <Label Grid.Row="1" Text="Chọn Khách Hàng" 
+                       FontFamily="OpenSansSemibold" FontSize="18" 
+                       HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#0F172A, Dark=White}"/>
+
+                <CollectionView Grid.Row="2" x:Name="CustomerCollection" 
+                                SelectionMode="Single" 
+                                SelectionChanged="OnSelectionChanged"
+                                Margin="0,10,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Customer">
+                            <Grid Padding="20,10" ColumnDefinitions="50, *">
+                                <Border Grid.Column="0" StrokeShape="RoundRectangle 25" 
+                                        HeightRequest="50" WidthRequest="50" 
+                                        BackgroundColor="#E0F2FE" StrokeThickness="0">
+                                    <Label Text="{Binding Avatar}" 
+                                           HorizontalOptions="Center" VerticalOptions="Center" 
+                                           FontAttributes="Bold" FontSize="20" TextColor="#0284C7"/>
+                                </Border>
+
+                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="15,0,0,0">
+                                    <Label Text="{Binding Name}" FontFamily="OpenSansSemibold" FontSize="16"/>
+                                    <Label Text="{Binding Phone}" FontSize="13" TextColor="Gray"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Grid>
+        </Border>
+    </AbsoluteLayout>
+</toolkit:Popup>

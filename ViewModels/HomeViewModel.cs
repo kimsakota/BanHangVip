@@ -5,6 +5,8 @@ using CommunityToolkit.Maui.Views; // Cần thiết để gọi ShowPopupAsync
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Maui.Alerts; 
+using CommunityToolkit.Maui.Core;
 
 namespace BanHangVip.ViewModels
 {
@@ -41,7 +43,7 @@ namespace BanHangVip.ViewModels
         {
             if (product == null) return;
 
-            // 1. Gọi Popup đẹp "BeautifulNumericPopup" thay vì DisplayPromptAsync
+            // 1. Gọi Popup đẹp "BeautifulNumericPopup" để nhập số lượng
             var popup = new BeautifulNumericPopup(product.Name);
 
             // 2. Chờ người dùng nhấn "NHẬP" và lấy kết quả
@@ -87,26 +89,46 @@ namespace BanHangVip.ViewModels
         {
             if (CurrentCart.Count == 0) return;
 
-            string customerName = await Shell.Current.DisplayPromptAsync("Lưu đơn", "Nhập tên khách hàng:", initialValue: "Khách lẻ");
+            // --- BẮT ĐẦU SỬA ĐỔI: Sử dụng Popup chọn khách hàng ---
 
-            if (string.IsNullOrWhiteSpace(customerName)) return;
+            // 1. Lấy danh sách khách hàng từ DataService
+            // (Lưu ý: Bạn cần đảm bảo đã thêm hàm GetCustomers vào IDataService và DataService)
+            var customers = _dataService.GetCustomers();
 
-            var newOrder = new Order
+            // 2. Khởi tạo và hiển thị Popup chọn khách
+            var popup = new CustomerSelectionPopup(customers);
+            var result = await Shell.Current.ShowPopupAsync(popup);
+
+            // 3. Kiểm tra kết quả trả về
+            if (result is Customer selectedCustomer)
             {
-                Id = $"DH{DateTime.Now.Ticks.ToString().Substring(10)}",
-                CustomerName = customerName,
-                Items = new List<OrderItem>(CurrentCart),
-                Status = OrderStatus.Pending,
-                CreatedAt = DateTime.Now
-            };
+                // Tạo đơn hàng với thông tin khách đã chọn
+                var newOrder = new Order
+                {
+                    Id = $"DH{DateTime.Now.Ticks.ToString().Substring(10)}",
+                    CustomerName = selectedCustomer.Name, // Lấy tên từ đối tượng Customer
+                    // Nếu sau này Order có thêm trường Phone, bạn gán: CustomerPhone = selectedCustomer.Phone,
+                    Items = new List<OrderItem>(CurrentCart),
+                    Status = OrderStatus.Pending,
+                    CreatedAt = DateTime.Now
+                };
 
-            _dataService.AddOrder(newOrder);
+                // Lưu vào CSDL
+                _dataService.AddOrder(newOrder);
 
-            CurrentCart.Clear();
-            UpdateCartMetrics();
+                // Dọn dẹp giỏ hàng
+                CurrentCart.Clear();
+                UpdateCartMetrics();
 
-            // Thông báo nhỏ để người dùng biết đã lưu (Tuỳ chọn)
-            // await Shell.Current.DisplayToastAsync("Đã lưu đơn hàng");
+                // Thông báo thành công kèm tên khách
+                //await Shell.Current.DisplayToastAsync($"Đã lưu đơn cho {selectedCustomer.Name}");
+            }
+            else
+            {
+                // Trường hợp người dùng bấm đóng popup mà không chọn ai -> Không làm gì cả (Hủy lưu)
+            }
+
+            // --- KẾT THÚC SỬA ĐỔI ---
         }
 
         [RelayCommand]
@@ -125,7 +147,7 @@ namespace BanHangVip.ViewModels
             // Thông báo cho giao diện biết các thuộc tính này đã thay đổi
             OnPropertyChanged(nameof(TotalCartWeight));
             OnPropertyChanged(nameof(IsCartVisible));
-            OnPropertyChanged(nameof(CurrentCart)); // Đôi khi cần thiết để CollectionView refresh
+            OnPropertyChanged(nameof(CurrentCart));
         }
     }
 }

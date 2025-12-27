@@ -11,6 +11,7 @@ namespace BanHangVip.Services
     public class DataService : IDataService
     {
         private ObservableCollection<Product> _products;
+        private ObservableCollection<Customer> _customers;
         private ObservableCollection<Order> _orders;
         private ObservableCollection<HistoryItem> _history;
 
@@ -26,12 +27,22 @@ namespace BanHangVip.Services
                 new Product { Id = "6", Name = "Cua Thịt", Icon = "🦀", DefaultPrice = 480000 },
             };
 
+            _customers = new ObservableCollection<Customer>
+            {
+                new Customer { Id = "1", Name = "Khách Lẻ", Phone = "", Avatar = "K" },
+                new Customer { Id = "2", Name = "Chị Mai", Phone = "098xxx", Avatar = "M" },
+                new Customer { Id = "3", Name = "Anh Thọ", Phone = "091xxx", Avatar = "T" },
+            };
+
             _orders = new ObservableCollection<Order>();
             _history = new ObservableCollection<HistoryItem>();
         }
         public ObservableCollection<Product> GetProducts() => _products;
         public ObservableCollection<Order> GetOrders() => _orders;
         public void AddOrder(Order order) => _orders.Insert(0, order);
+
+        public ObservableCollection<Customer> GetCustomers() => _customers;
+        public void AddCustomer(Customer customer) => _customers.Add(customer);
 
         public void UpdateProduct(Product product)
         {
